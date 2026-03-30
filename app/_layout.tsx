@@ -17,7 +17,7 @@ function AuthGuard() {
       // Não autenticado → manda para login
       router.replace('/auth');
     } else if (token && inAuthScreen) {
-      // Já autenticado → manda para home
+      // Já autenticado → manda para as tabs (index.tsx vai redirecionar para home)
       router.replace('/(tabs)');
     }
   }, [token, isLoading, segments]);
