@@ -1,17 +1,17 @@
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  ActivityIndicator,
-  Alert,
-  StatusBar,
-  Dimensions,
+  View,
 } from 'react-native';
-import { router } from 'expo-router';
 import { useAuth } from '../context/AuthContext';
 import { loginUser, registerUser } from '../services/authService';
 
@@ -39,6 +39,7 @@ export default function AuthScreen() {
     setLoading(true);
     try {
       const { token } = await loginUser({ email: loginEmail, password: loginPassword });
+      console.log('token recebido:', token);
       await signIn(token);
       router.replace('/(tabs)');
     } catch (e: any) {
