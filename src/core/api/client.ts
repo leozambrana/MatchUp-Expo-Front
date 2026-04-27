@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import { storage } from '@/utils/secure';
 
 // Types para API
 export interface ApiResponse<T = any> {
@@ -56,7 +56,7 @@ class ApiClient {
 
         // Adiciona token se existir (precisamos pegar do SecureStore)
         try {
-          const token = await SecureStore.getItemAsync('auth_token');
+          const token = await storage.getItem('auth_token');
           
           if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -98,7 +98,7 @@ class ApiClient {
         // Tratamento de token expirado
         if (error.response?.status === 401) {
           try {
-            await SecureStore.deleteItemAsync('auth_token');
+            await storage.removeItem('auth_token');
             
             // Redirecionar para login (precisamos do router)
             console.warn('Token expired, redirecting to login');
